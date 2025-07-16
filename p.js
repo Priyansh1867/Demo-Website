@@ -1,25 +1,54 @@
-const quotes = [
-  "Your journey is your power. Keep moving forward!",
-  "Code today, create tomorrow.",
-  "Dream big. Start small. Act now.",
-  "Consistency beats talent when talent doesn’t work hard.",
-  "You’re not behind — you’re just getting started!"
-];
+const form = document.getElementById("registrationForm");
+const message = document.getElementById("message");
+const passwordInput = document.getElementById("password");
+const strengthDiv = document.getElementById("strength");
 
-const colors = [
-  "#FFEEAD", "#E0BBE4", "#5be7c9ff", "#FADBD8", "#A9CCE3", "#D5F5E3"
-];
+form.addEventListener("submit", function (e) {
+  e.preventDefault(); // stop form from submitting
 
-const btn = document.getElementById("quoteBtn");
-const quoteDisplay = document.getElementById("quoteDisplay");
-const card = document.getElementById("profileCard");
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const branch = document.getElementById("branch").value.trim();
+  const year = document.getElementById("year").value;
+  const password = passwordInput.value;
 
-btn.addEventListener("click", () => {
-  // Random quote
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
-  quoteDisplay.textContent = quote;
+  if (!name || !email || !branch || !year || !password) {
+    message.style.color = "red";
+    message.textContent = "❌ All fields are required!";
+    return;
+  }
 
-  // Random background color
-  const color = colors[Math.floor(Math.random() * colors.length)];
-  card.style.backgroundColor = color;
+  if (!email.includes("@")) {
+    message.style.color = "red";
+    message.textContent = "❌ Invalid email format!";
+    return;
+  }
+
+  if (password.length < 6) {
+    message.style.color = "red";
+    message.textContent = "❌ Password must be at least 6 characters!";
+    return;
+  }
+
+  message.style.color = "green";
+  message.textContent = "✅ Registration successful!";
+});
+
+// Optional: Password strength checker
+passwordInput.addEventListener("input", function () {
+  const password = passwordInput.value;
+  let strength = "";
+
+  if (password.length < 6) {
+    strength = "Weak ❌";
+    strengthDiv.style.color = "red";
+  } else if (password.match(/[a-z]/) && password.match(/[0-9]/) && password.length >= 8) {
+    strength = "Strong ✅";
+    strengthDiv.style.color = "green";
+  } else {
+    strength = "Medium ⚠️";
+    strengthDiv.style.color = "orange";
+  }
+
+  strengthDiv.textContent = "Strength: " + strength;
 });
