@@ -1,45 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registration Form</title>
   <link rel="stylesheet" href="p.css">
-</head>
+ </head>
 <body>
-  <div class="container">
-    <form id="registrationForm">
-      <h2>Register</h2>
 
-      <label for="name">Name:</label>
-      <input type="text" id="name" placeholder="Enter your name">
+<form id="registrationForm" novalidate>
+  <h2>Register</h2>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" placeholder="example@domain.com">
-
-      <label for="branch">Branch:</label>
-      <input type="text" id="branch" placeholder="CSE / ECE / ME etc.">
-
-      <label for="year">Year:</label>
-      <select id="year">
-        <option value="">Select year</option>
-        <option>1st</option>
-        <option>2nd</option>
-        <option>3rd</option>
-        <option>4th</option>
-      </select>
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" placeholder="Minimum 6 characters">
-
-      <div id="strength"></div>
-
-      <button type="submit">Submit</button>
-      <button type="reset">Reset</button>
-
-      <p id="message"></p>
-    </form>
+  <div class="form-group">
+    <label for="fullName">Full Name</label>
+    <input id="fullName" name="fullName" type="text" required aria-required="true"/>
+    <div class="error" id="nameError">Please enter your full name.</div>
   </div>
 
-  <script src="p.js"></script>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required aria-required="true"/>
+    <div class="error" id="emailError">Enter a valid email address.</div>
+  </div>
+
+  <div class="form-group password-toggle">
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required aria-required="true"/>
+    <span class="toggle-visibility" onclick="togglePassword()">Show</span>
+    <div class="strength" id="passwordStrength"></div>
+    <div class="error" id="passwordError">Password must be 8+ chars, with uppercase, lowercase, number, and special character.</div>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input id="phone" name="phone" type="tel" placeholder="+91XXXXXXXXXX" required aria-required="true"/>
+    <div class="error" id="phoneError">Enter a valid 10-digit Indian phone number starting with +91.</div>
+  </div>
+
+  <div class="form-group">
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required aria-required="true">
+      <option value="">Select</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+    <div class="error" id="genderError">Please select your gender.</div>
+  </div>
+
+  <div class="form-group">
+    <label for="city">City</label>
+    <select id="city" name="city" required aria-required="true">
+      <option value="">Select</option>
+      <option>Mumbai</option>
+      <option>Delhi</option>
+      <option>Bangalore</option>
+      <option>Chennai</option>
+      <option>Hyderabad</option>
+    </select>
+    <div class="error" id="cityError">Please select your city.</div>
+  </div>
+
+  <div class="form-group">
+    <input id="terms" name="terms" type="checkbox" required aria-required="true"/>
+    <label for="terms">I agree to the Terms & Conditions</label>
+    <div class="error" id="termsError">You must accept the terms.</div>
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+<script src="p.js"></script>
+
 </body>
 </html>
