@@ -1,74 +1,79 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  padding: 40px;
-}
 
-.container {
-  background: #fff;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  width: 350px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #f8f9fa;
+    }
+    form {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .success {
+      border-color: green !important;
+    }
+    .invalid {
+      border-color: red !important;
+    }
+    .password-toggle {
+      position: relative;
+    }
+    .password-toggle input {
+      padding-right: 40px;
+    }
+    .password-toggle .toggle-visibility {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      cursor: pointer;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .strength {
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+    }
+    .strength.weak { color: red; }
+    .strength.medium { color: orange; }
+    .strength.strong { color: green; }
+    button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #999;
+    }
 
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-label {
-  font-weight: 500;
-  margin-top: 10px;
-  display: block;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  outline: none;
-  transition: 0.3s;
-}
-
-input:focus, select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0,123,255,0.3);
-}
-
-button {
-  width: 48%;
-  padding: 10px;
-  margin: 5px 1%;
-  border: none;
-  border-radius: 8px;
-  background: #007bff;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-#message {
-  margin-top: 10px;
-  text-align: center;
-  font-weight: 500;
-}
-
-#error {
-  color: red;
-}
-
-#strength {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
