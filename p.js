@@ -1,54 +1,98 @@
-const form = document.getElementById("registrationForm");
-const message = document.getElementById("message");
-const passwordInput = document.getElementById("password");
-const strengthDiv = document.getElementById("strength");
+  const form = document.getElementById('registrationForm');
+  const inputs = form.querySelectorAll('input, select');
+  
+  const emailRegex = /^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$/;
+  const phoneRegex = /^\\+91[6-9]\\d{9}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$/;
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault(); // stop form from submitting
+  function validateField(input) {
+    const id = input.id;
+    const value = input.value.trim();
+    const error = document.getElementById(id + 'Error');
+    let valid = true;
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const branch = document.getElementById("branch").value.trim();
-  const year = document.getElementById("year").value;
-  const password = passwordInput.value;
+    switch (id) {
+      case 'fullName':
+        valid = value.length > 0;
+        break;
+      case 'email':
+        valid = emailRegex.test(value);
+        break;
+      case 'password':
+        valid = passwordRegex.test(value);
+        break;
+      case 'phone':
+        valid = phoneRegex.test(value);
+        break;
+      case 'gender':
+      case 'city':
+        valid = value !== '';
+        break;
+      case 'terms':
+        valid = input.checked;
+        break;
+    }
 
-  if (!name || !email || !branch || !year || !password) {
-    message.style.color = "red";
-    message.textContent = "❌ All fields are required!";
-    return;
+    if (!valid) {
+      error.style.display = 'block';
+      input.classList.add('invalid');
+      input.classList.remove('success');
+    } else {
+      error.style.display = 'none';
+      input.classList.remove('invalid');
+      input.classList.add('success');
+    }
+
+    return valid;
   }
 
-  if (!email.includes("@")) {
-    message.style.color = "red";
-    message.textContent = "❌ Invalid email format!";
-    return;
+  function togglePassword() {
+    const pwd = document.getElementById('password');
+    const toggle = document.querySelector('.toggle-visibility');
+    pwd.type = pwd.type === 'password' ? 'text' : 'password';
+    toggle.textContent = pwd.type === 'password' ? 'Show' : 'Hide';
   }
 
-  if (password.length < 6) {
-    message.style.color = "red";
-    message.textContent = "❌ Password must be at least 6 characters!";
-    return;
+  function showPasswordStrength() {
+    const pwd = document.getElementById('password').value;
+    const strength = document.getElementById('passwordStrength');
+    let score = 0;
+    if (pwd.length >= 8) score++;
+    if (/[A-Z]/.test(pwd)) score++;
+    if (/[a-z]/.test(pwd)) score++;
+    if (/\\d/.test(pwd)) score++;
+    if (/[@$!%*?&]/.test(pwd)) score++;
+
+    if (score <= 2) {
+      strength.textContent = 'Weak';
+      strength.className = 'strength weak';
+    } else if (score === 3 || score === 4) {
+      strength.textContent = 'Medium';
+      strength.className = 'strength medium';
+    } else {
+      strength.textContent = 'Strong';
+      strength.className = 'strength strong';
+    }
   }
 
-  message.style.color = "green";
-  message.textContent = "✅ Registration successful!";
-});
+  inputs.forEach(input => {
+    input.addEventListener('blur', () => validateField(input));
+    if (input.id === 'password') {
+      input.addEventListener('input', showPasswordStrength);
+    }
+  });
 
-// Optional: Password strength checker
-passwordInput.addEventListener("input", function () {
-  const password = passwordInput.value;
-  let strength = "";
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let allValid = true;
+    inputs.forEach(input => {
+      if (!validateField(input)) allValid = false;
+    });
 
-  if (password.length < 6) {
-    strength = "Weak ❌";
-    strengthDiv.style.color = "red";
-  } else if (password.match(/[a-z]/) && password.match(/[0-9]/) && password.length >= 8) {
-    strength = "Strong ✅";
-    strengthDiv.style.color = "green";
-  } else {
-    strength = "Medium ⚠️";
-    strengthDiv.style.color = "orange";
-  }
-
-  strengthDiv.textContent = "Strength: " + strength;
-});
+    if (allValid) {
+      alert('Registration successful!');
+      form.reset();
+      document.querySelectorAll('.success').forEach(el => el.classList.remove('success'));
+      document.getElementById('passwordStrength').textContent = '';
+    }
+  });
